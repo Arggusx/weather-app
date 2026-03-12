@@ -2,8 +2,8 @@ const LetsGo = () => {
     return (
         <>
             <div className="container">
-                <img className="mobile" src="/Image.png" alt="" />
-                <img className="house" src="/House.png" alt="" />
+                <img className="mobile" src="/Images/Image.png" alt="" />
+                <img className="house" src="/Images/House.png" alt="" />
                 <div className="weather">
                     <div className="local">Montreal</div>
                     <div className="temp">19°</div>
