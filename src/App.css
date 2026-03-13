@@ -5,7 +5,7 @@ body {
 
 @font-face {
     font-family: "SF Pro Display";
-    src: url("/fonts/SFProDisplay-Regular.woff2") format("woff2");
+    src: url("/Fonts/SFPRODISPLAYREGULAR.OTF") format("opentype");
     font-weight: 400;
     font-style: normal;
 }
@@ -16,28 +16,40 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
     background-color: rgb(80, 39, 80);
 }
 
 .mobile {
-    width: 390px;
-    height: 844px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 .house {
     width: 390px;
     height: 390px;
     position: absolute;
-    bottom: 191px;
+    bottom: 8%;
+    z-index: 1;
+    transition: transform 0.35s ease;
 }
 
 .weather {
     align-items: center;
     position: absolute;
-    top: 130px;
+    top: 40px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    z-index: 2;
+    transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease;
 }
 
 .local {
@@ -91,4 +103,274 @@ body {
     color: white;
     opacity: 0.5;
     font-family: "SF Pro Display", sans-serif;
+}
+
+/* Bottom Sheet */
+.bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: linear-gradient(180deg, rgba(46, 30, 74, 0.95) 0%, rgba(58, 38, 92, 0.9) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-top-left-radius: 44px;
+    border-top-right-radius: 44px;
+    padding: 8px 16px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    user-select: none;
+    cursor: grab;
+    overflow: hidden;
+    width: 390px;
+    height: 325px;
+    box-sizing: border-box;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bottom-sheet.smooth {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sheet-handle {
+    width: 48px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 6px auto 10px;
+}
+
+.sheet-tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.sheet-tab {
+    font-family: "SF Pro Display", sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding-bottom: 6px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.sheet-tab:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sheet-tab.active {
+    color: white;
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+.sheet-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin-bottom: 14px;
+}
+
+.forecast-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    overflow: visible;
+    padding: 4px 0 12px;
+}
+
+.forecast-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 0;
+    width: 60px;
+    min-width: 60px;
+    height: 146px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(72, 49, 107, 0.4);
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.forecast-card:hover {
+    transform: translateY(-4px);
+    background: rgba(90, 60, 140, 0.55);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.forecast-card:active {
+    transform: scale(0.95);
+}
+
+.forecast-card.active {
+    background: rgba(100, 70, 160, 0.7);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 12px rgba(130, 90, 200, 0.4);
+}
+
+.forecast-card.selected {
+    transform: translateY(-6px) scale(1.05);
+    background: rgba(120, 80, 180, 0.8);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 20px rgba(130, 90, 200, 0.5);
+}
+
+/* Fade in animation */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeSlideUp 0.35s ease forwards;
+    opacity: 0;
+}
+
+.fc-time {
+    font-family: "SF Pro Display", sans-serif;
+    font-size: 13px;
+    color: white;
+    font-weight: 500;
+}
+
+.fc-icon-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 22px;
+    position: relative;
+}
+
+.fc-chance {
+    font-family: "SF Pro Display", sans-serif;
+    font-size: 11px;
+    color: #5cb8ff;
+}
+
+.fc-temp {
+    font-family: "SF Pro Display", sans-serif;
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+}
+
+.nav-wave {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    pointer-events: none;
+}
+
+.nav-wave svg {
+    width: 100%;
+    height: 100%;
+}
+
+.sheet-bottom-nav {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    background: #3E3F74;
+}
+
+.nav-items {
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-space {
+    width: 70px;
+}
+
+.nav-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.nav-icon.nav-interactive:hover {
+    transform: scale(1.2);
+}
+
+.nav-icon.nav-interactive:active {
+    transform: scale(0.9);
+}
+
+.nav-plus {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 10;
+    border: none;
+}
+
+.nav-plus::before,
+.nav-plus::after {
+    content: '';
+    position: absolute;
+    background: #48319D;
+    border-radius: 2px;
+}
+
+.nav-plus::before {
+    width: 3px;
+    height: 22px;
+}
+
+.nav-plus::after {
+    width: 22px;
+    height: 3px;
+}
+
+.nav-btn-img {
+    display: none;
+}
+
+.nav-plus:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+}
+
+.nav-plus:active {
+    transform: scale(0.95);
+}
+
+.nav-plus.rotated {
+    transform: rotate(45deg);
 }
