@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 
 const hourlyData = [
     { time: '12 AM', icon: '🌧️', chance: '30%', temp: '19°' },
@@ -16,12 +16,13 @@ const weeklyData = [
     { time: 'Fri', icon: '☀️', chance: '', temp: '23°' },
 ]
 
-const LetsGo = () => {
+const LetsGo = ({ onOpenWidgets }) => {
     const collapseAmount = 350
     const [sheetOffset, setSheetOffset] = useState(collapseAmount)
     const [isDragging, setIsDragging] = useState(false)
     const [activeTab, setActiveTab] = useState('hourly')
     const [selectedCard, setSelectedCard] = useState(null)
+    const [now, setNow] = useState(new Date())
     const dragging = useRef(false)
     const startY = useRef(0)
     const startOffset = useRef(0)
@@ -65,6 +66,22 @@ const LetsGo = () => {
         }
     }, [handleMove, handleEnd])
 
+    useEffect(() => {
+        const tick = () => setNow(new Date())
+        tick()
+        const interval = setInterval(tick, 1000)
+
+        return () => clearInterval(interval)
+    }, [])
+
+    const currentTime = useMemo(() => {
+        return now.toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+        })
+    }, [now])
+
     const handleStart = (clientY) => {
         dragging.current = true
         setIsDragging(true)
@@ -89,6 +106,14 @@ const LetsGo = () => {
         <>
             <div className="container">
                 <img className="mobile" src="/Images/Image.png" alt="" />
+
+                <div className="t1-top-shell">
+                    <div className="t1-status-bar" aria-label="Barra de status">
+                        <span className="t1-status-time">{currentTime}</span>
+                        <img className="t1-status-right" src="/Images/Right%20Side.png" alt="" />
+                    </div>
+                </div>
+
                 <img
                     className="house"
                     style={{
@@ -183,7 +208,7 @@ const LetsGo = () => {
                             <button
                                 type="button"
                                 className={`nav-icon nav-icon-list ${activeTab === 'weekly' ? 'active' : ''}`}
-                                disabled
+                                onClick={onOpenWidgets}
                                 aria-label="Mostrar previsão semanal"
                             >
                                 <img src="/Images/List.png" alt="Weekly" className="nav-img nav-img-list" />
