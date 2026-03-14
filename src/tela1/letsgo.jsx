@@ -57,10 +57,10 @@ const LetsGo = ({ onOpenWidgets }) => {
             .catch(error => {
                 console.error('Erro ao obter dados horários do clima:', error);
             });
-    }, [urlApi]);
+    }, [urlApi, urlForecast]);
 
 
-    const collapseAmount = 340
+    const collapseAmount = 350
     const [sheetOffset, setSheetOffset] = useState(collapseAmount)
     const [isDragging, setIsDragging] = useState(false)
     const [activeTab, setActiveTab] = useState('hourly')
