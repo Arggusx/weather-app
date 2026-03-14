@@ -17,7 +17,50 @@ const weeklyData = [
 ]
 
 const LetsGo = ({ onOpenWidgets }) => {
-    const collapseAmount = 350
+    const [weatherData, setWeatherData] = useState(null)
+    const [hourlyData, setHourlyData] = useState([])
+    const [weeklyData, setWeeklyData] = useState([])
+
+    const lat = -9.6658;
+    const lon = -35.7350;
+
+    const apiKey = import.meta.env.VITE_API_WEATHER_KEY
+    const urlApi = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${apiKey}`
+
+    const urlForecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${apiKey}`
+
+    useEffect(() => {
+        fetch(urlApi)
+            .then(response => response.json())
+            .then(data => {
+                if (data.cod === 200) {
+                    setWeatherData(data);
+                    console.log('Dados do clima:', data);
+                } else {
+                    console.error('Erro na resposta da API:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao obter dados do clima:', error);
+            });
+
+        fetch(urlForecast)
+            .then(response => response.json())
+            .then(data => {
+                if (data.cod == 200) {
+                    setHourlyData(data.list.slice(0, 8));
+                    const dailyData = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+                    setWeeklyData(dailyData);
+                    console.log('Dados horários do clima:', dailyData);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao obter dados horários do clima:', error);
+            });
+    }, [urlApi]);
+
+
+    const collapseAmount = 340
     const [sheetOffset, setSheetOffset] = useState(collapseAmount)
     const [isDragging, setIsDragging] = useState(false)
     const [activeTab, setActiveTab] = useState('hourly')
@@ -93,10 +136,8 @@ const LetsGo = ({ onOpenWidgets }) => {
         setSelectedCard(selectedCard === i ? null : i)
     }
 
-    // expandProgress: 1 = sheet em cima (expandido), 0 = sheet recolhido (embaixo)
     const expandProgress = 1 - sheetOffset / collapseAmount
-    // Quando sheet sobe: casa sobe, texto some
-    const houseUp = expandProgress * 40
+    const houseUp = expandProgress * 130
     const weatherOpacity = Math.max(0, (sheetOffset / collapseAmount))
     const weatherScale = 0.85 + (sheetOffset / collapseAmount) * 0.15
     const weatherBlur = (1 - sheetOffset / collapseAmount) * 8
@@ -104,7 +145,7 @@ const LetsGo = ({ onOpenWidgets }) => {
 
     return (
         <>
-            <div className="container">
+            <div className="container notranslate" translate='no'>
                 <img className="mobile" src="/Images/Image.png" alt="" />
 
                 <div className="t1-top-shell">
@@ -125,17 +166,15 @@ const LetsGo = ({ onOpenWidgets }) => {
                 <div
                     className="weather"
                     style={{
-                        opacity: weatherOpacity,
-                        transform: `scale(${weatherScale}) translateY(${(1 - weatherOpacity) * -20}px)`,
-                        filter: `blur(${weatherBlur}px)`,
-                        pointerEvents: weatherOpacity < 0.3 ? 'none' : 'auto',
+
+                        transform: `scale(${weatherScale}) translateY(${weatherOpacity * 70}px)`,
                     }}
                 >
-                    <div className="local">Montreal</div>
-                    <div className="temp">19°</div>
+                    <div className="local">{weatherData?.name || 'Carregando...'}</div>
+                    <div className="temp">{weatherData?.main?.temp?.toFixed(0) || 'Carregando...'}°</div>
                     <div className="info">
-                        <div className="clima">Mostly Clear</div>
-                        <div className="umidade"><span>H:24°</span><span>L:12°</span></div>
+                        <div className="clima">{weatherData?.weather?.[0]?.description}</div>
+                        <div className="umidade"><div>H:{weatherData?.main?.humidity}%</div><div>L:{weatherData?.main?.temp_min?.toFixed(0)}°</div></div>
                     </div>
                 </div>
 
@@ -165,25 +204,45 @@ const LetsGo = ({ onOpenWidgets }) => {
                     <div className="sheet-divider"></div>
 
                     <div className="forecast-row">
-                        {forecastData.map((item, i) => (
-                            <div
-                                key={`${activeTab}-${i}`}
-                                className={`forecast-card ${item.active ? 'active' : ''} ${selectedCard === i ? 'selected' : ''} fade-in`}
-                                style={{ animationDelay: `${i * 0.07}s` }}
-                                onClick={() => handleCardClick(i)}
-                            >
-                                <span className="fc-time">{item.time}</span>
-                                <div className="fc-icon-wrap">
-                                    <span className="fc-icon">{item.icon}</span>
-                                    {item.chance && <span className="fc-chance">{item.chance}</span>}
+                        {forecastData.map((item, i) => {
+                            const temperatura = Math.round(item.main.temp) + '°';
+                            const tempMax = Math.round(item.main.temp_max) + '°';
+                            const tempMin = Math.round(item.main.temp_min) + '°';
+                            const chanceChuva = item.pop > 0 ? Math.round(item.pop * 100) + '%' : null;
+                            const date = new Date(item.dt_txt);
+                            const displayTime = activeTab === 'hourly'
+                                ? date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) // Mostra 14:00
+                                : date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', ''); // Mostra Seg
+
+                            return (
+                                <div
+                                    key={`${activeTab}-${i}`}
+                                    className={`forecast-card ${selectedCard === i ? 'selected' : ''} fade-in`}
+                                    style={{ animationDelay: `${i * 0.07}s` }}
+                                    onClick={() => handleCardClick(i)}
+                                >
+                                    <span className="fc-time">{displayTime}</span>
+
+                                    <div className="fc-icon-wrap">
+                                        <img className='w-[60%]'
+                                            src={`http://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
+                                            alt="clima"
+                                        />
+                                        {chanceChuva && <span className="fc-chance">{chanceChuva}</span>}
+                                    </div>
+
+                                    <span className="fc-temp">{temperatura}</span>
+                                    <div className='text-white' style={{ fontSize: '10px', opacity: 0.6, display: 'flex', gap: '4px' }}>
+                                        <span>H:{tempMax}</span>
+                                        <span>L:{tempMin}</span>
+                                    </div>
                                 </div>
-                                <span className="fc-temp">{item.temp}</span>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     <div className="sheet-bottom-nav">
-                        <img src="/Images/Rectangle%20364.png" alt="" className="sheet-bottom-nav-back" />
+                        <img className='w-[100%] h-[80%] absolute top-5' src="/Images/Rectangle%20364.png" alt="" />
                         <img src="/Images/Front.png" alt="" className="sheet-bottom-nav-bg" />
 
                         <button
