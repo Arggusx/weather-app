@@ -8,6 +8,7 @@
     padding: 36px 0;
     box-sizing: border-box;
     overflow: hidden;
+    position: relative;
 }
 
 .ww-phone {
@@ -22,7 +23,10 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
+    height: 100vh;
+    max-height: none;
 }
 
 .ww-status-bar {
@@ -105,17 +109,18 @@
 }
 
 .ww-title {
-    margin: 0 0 0 4px;
+    margin: -5px;
     font-family: 'SF Pro Display', sans-serif;
-    font-size: 39px;
+    font-size: 34px;
     line-height: 1;
-    font-weight: 400;
+    font-weight: 100;
     color: #fff;
     letter-spacing: -0.4px;
+    margin-left: 1px;
 }
 
 .ww-more {
-    margin-left: auto;
+    margin-left: 219px;
     width: 31px;
     height: 31px;
     border-radius: 50%;
@@ -137,7 +142,7 @@
 }
 
 .ww-search-wrap {
-    height: 33px;
+    height: 36px;
     border-radius: 11px;
     background: linear-gradient(180deg, rgba(40, 35, 88, 0.95) 0%, rgba(45, 42, 94, 0.95) 100%);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -265,7 +270,7 @@
     margin: 0;
     color: #f6f5ff;
     font-family: 'SF Pro Display', sans-serif;
-    font-size: 48px;
+    font-size: 70px;
     line-height: 41px;
     font-weight: 400;
     letter-spacing: -1.6px;
@@ -275,7 +280,7 @@
 .ww-range {
     margin: 4px 0 2px;
     font-family: 'SF Pro Display', sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1;
     font-weight: 500;
     color: rgba(201, 186, 255, 0.58);
@@ -288,7 +293,7 @@
     margin: 0;
     color: #efeaff;
     font-family: 'SF Pro Display', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.2;
     font-weight: 500;
     letter-spacing: -0.2px;
@@ -334,7 +339,7 @@
     margin: 4px 0 2px;
     color: #efeaff;
     font-family: 'SF Pro Display', sans-serif;
-    font-size: 12px;
+    font-size: 15px;
     line-height: 1;
     font-weight: 400;
     white-space: nowrap;
@@ -348,7 +353,7 @@
     margin-left: 12px;
 }
 
-@media (max-width: 470px) {
+@media (max-width: 500px) {
     .ww-page {
         padding: 16px 0;
     }
@@ -384,18 +389,20 @@
     }
 
     .ww-title {
-        font-size: 41px;
+        width: 102px;
+        height: 34px;
     }
 
     .ww-more {
-        width: 31px;
-        height: 31px;
+        width: 34px;
+        height: 33px;
         border-width: 2px;
     }
 
     .ww-search-wrap {
-        height: 33px;
+        height: 36px;
         border-radius: 11px;
+        margin: 8px 12px;
     }
 
     .ww-search {
@@ -454,3 +461,78 @@
         font-size: 12px;
     }
 }
+    /* Adicionar media queries para responsividade mobile */
+    @media (max-width: 338px) {
+        .ww-phone {
+            padding: 0 6px 16px;
+        }
+        .ww-title {
+            font-size: 32px;
+            height: 34px;
+        }
+        .ww-card {
+            width: 98vw;
+            min-width: 0;
+            padding: 6px 4px;
+            border-radius: 18px;
+        }
+        .ww-temp {
+            font-size: 36px;
+            width: 70px;
+        }
+        .ww-city {
+            font-size: 13px;
+            width: 90px;
+        }
+        .ww-icon {
+            width: 100px;
+            height: 100px;
+        }
+        .ww-search-wrap {
+            padding: 0 20px;
+        }
+    }
+
+    /* Melhorar responsividade dos cards e layout geral */
+    @media (max-width: 100px) {
+        .ww-card {
+            width: 98vw;
+            min-width: 0;
+            padding: 8px 6px;
+            border-radius: 20px;
+        }
+        .ww-card-left, .ww-card-right {
+            width: 90px;
+            min-width: 90px;
+        }
+        .ww-temp {
+            font-size: 32px;
+            width: 60px;
+        }
+        .ww-city {
+            font-size: 12px;
+            width: 70px;
+        }
+        .ww-icon {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    /* Ajustar layout flex para empilhar em telas muito pequenas */
+    @media (max-width: 338px) {
+        .ww-card {
+            flex-direction: column;
+            align-items: flex-start;
+            height: auto;
+        }
+        .ww-card-left, .ww-card-right {
+            width: 100%;
+            min-width: 0;
+            margin-bottom: 8px;
+        }
+        .ww-icon {
+            margin-top: 0;
+            margin-right: 0;
+        }
+    }
