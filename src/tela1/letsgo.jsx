@@ -17,12 +17,11 @@ const weeklyData = [
 ]
 
 const LetsGo = () => {
-    const collapseAmount = 295
+    const collapseAmount = 350
     const [sheetOffset, setSheetOffset] = useState(collapseAmount)
     const [isDragging, setIsDragging] = useState(false)
     const [activeTab, setActiveTab] = useState('hourly')
     const [selectedCard, setSelectedCard] = useState(null)
-    const [plusRotated, setPlusRotated] = useState(false)
     const dragging = useRef(false)
     const startY = useRef(0)
     const startOffset = useRef(0)
@@ -159,34 +158,36 @@ const LetsGo = () => {
                     </div>
 
                     <div className="sheet-bottom-nav">
-                        <div className="nav-wave">
-                            <svg viewBox="0 0 500 150" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#262C51" />
-                                        <stop offset="100%" stopColor="#3E3F74" />
-                                    </linearGradient>
-                                </defs>
-                                <path d="M0,80 C120,80 150,20 250,20 C350,20 380,80 500,80 L500,150 L0,150 Z" fill="url(#waveGradient)" />
-                                <path d="M0,80 C120,80 150,20 250,20 C350,20 380,80 500,80" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-                            </svg>
-                        </div>
+                        <img src="/Images/Rectangle%20364.png" alt="" className="sheet-bottom-nav-back" />
+                        <img src="/Images/Front.png" alt="" className="sheet-bottom-nav-bg" />
 
-                        <div
-                            className={`nav-plus ${plusRotated ? 'rotated' : ''}`}
-                            onClick={() => setPlusRotated(!plusRotated)}
-                        >
-                            <img src="/Images/Button2.png" alt="Add" className="nav-btn-img" />
-                        </div>
+                        <button
+                            type="button"
+                            className="nav-plus"
+                            disabled
+                            aria-label="Alternar painel"
+                        ></button>
 
                         <div className="nav-items">
-                            <div className="nav-icon nav-interactive">
-                                <img src="/Images/Map.png" alt="Map" className="nav-img" />
-                            </div>
+                            <button
+                                type="button"
+                                className={`nav-icon ${activeTab === 'hourly' ? 'active' : ''}`}
+                                disabled
+                                aria-label="Mostrar previsão por hora"
+                            >
+                                <img src="/Images/Map.png" alt="Hourly" className="nav-img" />
+                            </button>
+
                             <div className="nav-space"></div>
-                            <div className="nav-icon nav-interactive">
-                                <img src="/Images/List.png" alt="List" className="nav-img" />
-                            </div>
+
+                            <button
+                                type="button"
+                                className={`nav-icon nav-icon-list ${activeTab === 'weekly' ? 'active' : ''}`}
+                                disabled
+                                aria-label="Mostrar previsão semanal"
+                            >
+                                <img src="/Images/List.png" alt="Weekly" className="nav-img nav-img-list" />
+                            </button>
                         </div>
                     </div>
                 </div>
