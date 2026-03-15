@@ -7,22 +7,25 @@
     background: #31325F;
     padding: 36px 0;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
     position: relative;
+    overflow-y: hidden;
 }
 
 .ww-phone {
-    width: 548px;
+    width: 440px;
     max-width: 92vw;
     min-height: 1260px;
     border-radius: 58px;
+    border: solid 1px black;
     background: #31325F;
     padding: 0 34px 52px;
     box-sizing: border-box;
-    box-shadow: 0 40px 140px rgba(58, 38, 171, 0.52);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 15px;
     overflow-y: auto;
     position: relative;
     height: 100vh;
@@ -61,7 +64,7 @@
     border-bottom: none;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 10px;
     position: relative;
 }
 
@@ -226,17 +229,6 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    pointer-events: none;
-}
-
-.ww-card-bg-shape {
-    position: absolute;
-    top: -24px;
-    left: -24px;
-    width: 130%;
-    height: 102px;
-    transform: rotate(8deg);
-    border-radius: 0 0 54% 42% / 0 0 100% 80%;
     pointer-events: none;
 }
 
@@ -456,78 +448,90 @@
         font-size: 12px;
     }
 }
-    /* Adicionar media queries para responsividade mobile */
-    @media (max-width: 338px) {
-        .ww-phone {
-            padding: 0 6px 16px;
-        }
-        .ww-title {
-            font-size: 32px;
-            height: 34px;
-        }
-        .ww-card {
-            width: 98vw;
-            min-width: 0;
-            padding: 6px 4px;
-            border-radius: 18px;
-        }
-        .ww-temp {
-            font-size: 36px;
-            width: 70px;
-        }
-        .ww-city {
-            font-size: 13px;
-            width: 90px;
-        }
-        .ww-icon {
-            width: 100px;
-            height: 100px;
-        }
-        .ww-search-wrap {
-            padding: 0 20px;
-        }
+
+@media (max-width: 338px) {
+    .ww-phone {
+        padding: 0 6px 16px;
     }
 
-    /* Melhorar responsividade dos cards e layout geral */
-    @media (max-width: 100px) {
-        .ww-card {
-            width: 98vw;
-            min-width: 0;
-            padding: 8px 6px;
-            border-radius: 20px;
-        }
-        .ww-card-left, .ww-card-right {
-            width: 90px;
-            min-width: 90px;
-        }
-        .ww-temp {
-            font-size: 32px;
-            width: 60px;
-        }
-        .ww-city {
-            font-size: 12px;
-            width: 70px;
-        }
-        .ww-icon {
-            width: 80px;
-            height: 80px;
-        }
+    .ww-title {
+        font-size: 32px;
+        height: 34px;
     }
 
-    /* Ajustar layout flex para empilhar em telas muito pequenas */
-    @media (max-width: 338px) {
-        .ww-card {
-            flex-direction: column;
-            align-items: flex-start;
-            height: auto;
-        }
-        .ww-card-left, .ww-card-right {
-            width: 100%;
-            min-width: 0;
-            margin-bottom: 8px;
-        }
-        .ww-icon {
-            margin-top: 0;
-            margin-right: 0;
-        }
+    .ww-card {
+        width: 98vw;
+        min-width: 0;
+        padding: 6px 4px;
+        border-radius: 18px;
     }
+
+    .ww-temp {
+        font-size: 36px;
+        width: 70px;
+    }
+
+    .ww-city {
+        font-size: 13px;
+        width: 90px;
+    }
+
+    .ww-icon {
+        width: 100px;
+        height: 100px;
+    }
+
+    .ww-search-wrap {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 100px) {
+    .ww-card {
+        width: 98vw;
+        min-width: 0;
+        padding: 8px 6px;
+        border-radius: 20px;
+    }
+
+    .ww-card-left,
+    .ww-card-right {
+        width: 90px;
+        min-width: 90px;
+    }
+
+    .ww-temp {
+        font-size: 32px;
+        width: 60px;
+    }
+
+    .ww-city {
+        font-size: 12px;
+        width: 70px;
+    }
+
+    .ww-icon {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 338px) {
+    .ww-card {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+    }
+
+    .ww-card-left,
+    .ww-card-right {
+        width: 100%;
+        min-width: 0;
+        margin-bottom: 8px;
+    }
+
+    .ww-icon {
+        margin-top: 0;
+        margin-right: 0;
+    }
+}
