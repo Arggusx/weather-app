@@ -60,7 +60,7 @@ const LetsGo = ({ onOpenWidgets }) => {
     }, [urlApi]);
 
 
-    const collapseAmount = 340
+    const collapseAmount = 347
     const [sheetOffset, setSheetOffset] = useState(collapseAmount)
     const [isDragging, setIsDragging] = useState(false)
     const [activeTab, setActiveTab] = useState('hourly')
