@@ -75,6 +75,7 @@
     margin: 0;
     padding: 0;
 }
+
 .ww-top {
     margin: 0;
     padding: 0;
@@ -207,22 +208,17 @@
 .ww-card {
     position: relative;
     width: 342px;
-    height: 184px;
+    height: 175px;
     border-radius: 28px;
     overflow: hidden;
-    background:
-        radial-gradient(120% 110% at 50% -20%, rgba(145, 122, 255, 0.22) 0%, rgba(145, 122, 255, 0) 60%),
-        linear-gradient(145deg, #5a37c7 0%, #5634c4 53%, #6440d5 100%);
-    border: 1px solid rgba(160, 140, 255, 0.18);
+    background-image: url("Images/Rectangle.svg");
+    background-color: #31325f;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     padding: 14px 16px;
     box-sizing: border-box;
-    box-shadow:
-        0 8px 18px rgba(21, 10, 75, 0.32),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        inset 0 -8px 16px rgba(43, 21, 110, 0.12);
+
 }
 
 .ww-card::before {
@@ -230,7 +226,6 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    border: 1px solid rgba(255, 255, 255, 0.04);
     pointer-events: none;
 }
 
@@ -240,7 +235,6 @@
     left: -24px;
     width: 130%;
     height: 102px;
-    background: linear-gradient(90deg, rgba(128, 99, 255, 0.45) 0%, rgba(153, 124, 255, 0.15) 100%);
     transform: rotate(8deg);
     border-radius: 0 0 54% 42% / 0 0 100% 80%;
     pointer-events: none;
@@ -260,6 +254,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    gap: 8px;
 }
 
 .ww-temp {
@@ -315,7 +310,7 @@
 
 .ww-icon {
     width: 160px;
-    height: 160px;
+    height: 150px;
     object-fit: contain;
     margin-top: -18px;
     margin-right: -6px;
@@ -376,7 +371,7 @@
 
     .ww-status-time {
         font-size: 13px;
-        
+
     }
 
     .ww-status-right-image {
@@ -417,9 +412,9 @@
     .ww-card {
         width: 342px;
         max-width: 100%;
-        height: 184px;
+        height: 174px;
         border-radius: 28px;
-        padding: 10px 12px;
+        padding: 15px 25px;
     }
 
     .ww-temp {
@@ -442,8 +437,8 @@
     }
 
     .ww-icon {
-        width: 160px;
-        height: 160px;
+        width: 130px;
+        height: 130px;
     }
 
     .ww-icon-fast-wind,
