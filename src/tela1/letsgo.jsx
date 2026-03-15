@@ -57,7 +57,7 @@ const LetsGo = ({ onOpenWidgets }) => {
             .catch(error => {
                 console.error('Erro ao obter dados horários do clima:', error);
             });
-    }, [urlApi]);
+    }, [urlApi, urlForecast]);
 
 
     const collapseAmount = 347
