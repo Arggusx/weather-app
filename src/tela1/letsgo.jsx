@@ -1,21 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 
-const hourlyData = [
-    { time: '12 AM', icon: '🌧️', chance: '30%', temp: '19°' },
-    { time: 'Now', icon: '🌙', chance: '', temp: '19°', active: true },
-    { time: '2 AM', icon: '🌨️', chance: '', temp: '18°' },
-    { time: '3 AM', icon: '☁️', chance: '', temp: '19°' },
-    { time: '4 AM', icon: '🌧️', chance: '', temp: '19°' },
-]
-
-const weeklyData = [
-    { time: 'Mon', icon: '☀️', chance: '', temp: '22°' },
-    { time: 'Tue', icon: '🌧️', chance: '60%', temp: '17°' },
-    { time: 'Wed', icon: '⛅', chance: '', temp: '20°' },
-    { time: 'Thu', icon: '🌧️', chance: '40%', temp: '16°' },
-    { time: 'Fri', icon: '☀️', chance: '', temp: '23°' },
-]
-
 const LetsGo = ({ onOpenWidgets }) => {
     const [weatherData, setWeatherData] = useState(null)
     const [hourlyData, setHourlyData] = useState([])
@@ -35,7 +19,11 @@ const LetsGo = ({ onOpenWidgets }) => {
             .then(data => {
                 if (data.cod === 200) {
                     setWeatherData(data);
-                    console.log('Dados do clima:', data);
+                    // Log detalhado
+                    console.log('Cidade:', data.name);
+                    console.log('Temperatura:', data.main?.temp);
+                    console.log('Descrição:', data.weather?.[0]?.description);
+                    console.log('Ícone:', data.weather?.[0]?.icon);
                 } else {
                     console.error('Erro na resposta da API:', data.message);
                 }
@@ -51,7 +39,16 @@ const LetsGo = ({ onOpenWidgets }) => {
                     setHourlyData(data.list.slice(0, 8));
                     const dailyData = data.list.filter(item => item.dt_txt.includes('12:00:00'));
                     setWeeklyData(dailyData);
-                    console.log('Dados horários do clima:', dailyData);
+                    // Log detalhado
+                    console.log('Previsão horária:');
+                    data.list.slice(0, 8).forEach((item, idx) => {
+                        console.log(`Hora ${idx}:`, {
+                            temp: item.main.temp,
+                            descricao: item.weather[0].description,
+                            icone: item.weather[0].icon,
+                            dt_txt: item.dt_txt
+                        });
+                    });
                 }
             })
             .catch(error => {
