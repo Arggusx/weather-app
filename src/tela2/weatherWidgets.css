@@ -61,7 +61,10 @@
 .ww-header-bar {
     margin: 0 -34px;
     padding: 0 22px 12px;
-    background: #31325F;
+    background: rgba(46, 51, 90, 0.4);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(20px);
+    ;
     border-bottom: none;
     display: flex;
     flex-direction: column;
@@ -85,7 +88,7 @@
 .ww-top {
     margin: 0;
     padding: 0;
-    background: #31325F;
+    background: transparent;
     border-bottom: none;
 }
 
@@ -151,7 +154,9 @@
 .ww-search-wrap {
     height: 36px;
     border-radius: 11px;
-    background: linear-gradient(180deg, rgba(40, 35, 88, 0.95) 0%, rgba(45, 42, 94, 0.95) 100%);
+    background: rgba(46, 51, 90, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     align-items: center;
