@@ -214,7 +214,7 @@
     height: 175px;
     border-radius: 28px;
     overflow: hidden;
-    background-image: url("Images/Rectangle.svg");
+    background-image: url("/Images/Rectangle.svg");
     background-color: #31325f;
     display: flex;
     justify-content: space-between;
