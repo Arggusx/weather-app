@@ -33,7 +33,8 @@
 }
 
 .ww-status-bar {
-    margin: 0 -34px;
+    top: 5px;
+    left: 10px;
     height: 34px;
     padding: 0 22px;
     display: flex;
@@ -65,7 +66,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    position: relative;
+    position: fixed;
+    top: 0;
+    z-index: 11;
 }
 
 .ww-status-bar {
@@ -202,6 +205,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    z-index: 10;
+    position: relative;
+    top: 150px;
 }
 
 .ww-group-bottom {
