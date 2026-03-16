@@ -50,13 +50,31 @@ body {
     z-index: 0;
 }
 
-.house {
+.house-container {
     width: 390px;
     height: 390px;
     position: absolute;
-    bottom: 8%;
+    bottom: 60px;
     z-index: 1;
     transition: transform 0.35s ease;
+}
+
+.house-floating-anim {
+    width: 100%;
+    height: 100%;
+    animation: up-down 3s ease-in-out infinite;
+}
+
+@keyframes up-down {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
 }
 
 .t1-top-shell {

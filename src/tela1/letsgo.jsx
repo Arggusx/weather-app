@@ -152,14 +152,18 @@ const LetsGo = ({ onOpenWidgets }) => {
                     </div>
                 </div>
 
-                <img
-                    className="house"
+                <div
+                    className="house-container"
                     style={{
                         transform: `translateY(-${houseUp}px) scale(${houseScale})`,
                     }}
-                    src="/Images/House.png"
-                    alt=""
-                />
+                >
+                    <img
+                        className="house-floating-anim"
+                        src="/Images/House.png"
+                        alt="Casa"
+                    />
+                </div>
                 <div
                     className="weather"
                     style={{
